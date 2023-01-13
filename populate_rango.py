@@ -7,16 +7,16 @@ from rango.models import Category,Page
 
 def populate():
     #List of pages
-    python_pages = [ {"title": "Official Python Tutorial", "url": "http://docs.python.org/3/tutorial"},
-        {"title": "How to Think like a Computer Scientist", "url": "http://www.greenteapress.com/thinkpython/"},
-        {"title": "Learn Python in 10 Minutes", "url": "http://www.korokithakis.net/tutorials/python"}, 
+    python_pages = [ {"title": "Official Python Tutorial", "url": "http://docs.python.org/3/tutorial/", "views": 20},
+        {"title": "How to Think like a Computer Scientist", "url": "http://www.greenteapress.com/thinkpython/", "views":16},
+        {"title": "Learn Python in 10 Minutes", "url": "http://www.korokithakis.net/tutorials/python/", "views":19}, 
     ]
 
-    django_pages = [        {"title": "Official Django Tutorial","url": "https://docs.djangoproject.com/en/2.1/intro/tutorial01"},
-        {"title": "Django Rocks","url": "http://www.djangorocks.com"},
-        {"title": "How to Tango with Django", "url": "http://www.tangowithdjango.com/"}]
+    django_pages = [        {"title": "Official Django Tutorial","url": "https://docs.djangoproject.com/en/2.1/intro/tutorial01/", "views":5},
+        {"title": "Django Rocks","url": "http://www.djangorocks.com/", "views":7},
+        {"title": "How to Tango with Django", "url": "http://www.tangowithdjango.com/", "views":18}]
 
-    other_pages = [{"title": "Bottle","url": "http://bottlepy.org/docs/dev/"}, {"title": "Flask","url":"http://flask.pocoo.org"}]
+    other_pages = [{"title": "Bottle","url": "http://bottlepy.org/docs/dev/", "views":5}, {"title": "Flask","url":"http://flask.pocoo.org", "views":17}]
 
     #Dict mapping categories to list of pages
     categories = {"Python": {"pages": python_pages,"views":128,"likes":64},
@@ -29,13 +29,13 @@ def populate():
     for categ,categ_data in categories.items():
         c = add_categ(categ,categ_data["views"],categ_data["likes"])
         for p in categ_data["pages"]:
-            add_page(c,p["title"],p["url"],0)
+            add_page(c,p["title"],p["url"],p["views"])
             #print out each page we have added and its associated category
             print(f"-{c}: {p}") 
 
 
 
-def add_page(categ,title,url,views=0):
+def add_page(categ,title,url,views):
         p = Page.objects.get_or_create(category=categ,title=title)[0]
         p.url=url
         p.views=views
